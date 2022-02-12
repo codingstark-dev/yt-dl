@@ -66,12 +66,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let resp;
     try {
         let info = await ytdl.getInfo(newUrl,);
-        let videoData = ytdl(newUrl, { quality: 'highestaudio' })
-        videoData.on('info', (info) => {
-            console.log(info);
-        }
+        // let videoData = ytdl(newUrl, { quality: 'highestaudio' })
+        // videoData.on('info', (info) => {
+        //     console.log(info);
+        // }
 
-        );
+        // );
         let listOfData = []
         let i = 0;
 

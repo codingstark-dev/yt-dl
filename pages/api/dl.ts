@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const url = req.query.url;
     const title = req.query.title;
     const type = req.query.type;
-    console.log(url)
+    // console.log(url)
     var options: AxiosRequestConfig = {
         url: url as string,
         method: "GET",
