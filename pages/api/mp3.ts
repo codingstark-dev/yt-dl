@@ -2,9 +2,12 @@ import cp from 'child_process';
 import readline from 'readline';
 // External modules
 import ffmpeg from 'fluent-ffmpeg';
+import ffmpegs from 'ffmpeg-static';
 import ytdl from "ytdl-core";
 import { NextApiRequest, NextApiResponse } from 'next';
 import ytmux from 'ytdl-core-muxer';
+import ffmpegPath from '@ffmpeg-installer/ffmpeg';
+ffmpeg.setFfmpegPath(ffmpegPath.path);
 // Global constants
 const ref = 'https://www.youtube.com/watch?v=LPM1sY0ipNM';
 
@@ -32,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             // })
             .on("error", function (err) {
                 console.log('error', err)
-                res.json(err)
+                return res.json(err)
             })
             .on("end", function () {
             })
