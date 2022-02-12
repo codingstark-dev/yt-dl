@@ -43,16 +43,16 @@ export default function Footer() {
       {/* <div className="flex justify-center">
         <hr className="w-24 opacity-50 text-center" />
       </div> */}
-      <div className="max-w-5xl px-1 mx-auto text-center text-xs">
+      {/* <div className="max-w-5xl px-1 mx-auto text-center text-xs">
         Developed By
         <span className="text-red-500 font-bold">
-          <a href="https://codingstark.com" rel="sponsored">
+          <a href="https://codingstark.com" rel="sponsored"> */}
             {" "}
             {/* */}CodingStark
-          </a>{" "}
-        </span>{" "}
-        {/* */}Made with
-        <svg
+          {/* </a>{" "} */}
+        {/* // </span>{" "} */}
+        {/* ade with */}
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6 text-red-500 inline"
           viewBox="0 0 20 20"
@@ -65,7 +65,7 @@ export default function Footer() {
           />
         </svg>
         in India
-      </div>
+      </div> */}
       <div className="max-w-5xl px-3 mx-auto text-center opacity-70 text-xs">
         © 2020-2022 {SiteDetails.website_name}
         <span className="text-red-500 font-bold">
