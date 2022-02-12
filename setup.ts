@@ -6,7 +6,7 @@ let SiteDetails = {
     "googleAnalytic": "UA-107325278-5",
     'title': "YutMp3.com",
     'description': 'YutMp3.com',
-    'website': env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://govtallindiajobs.in',
+    'website': env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://yt-dl-fefsx.ondigitalocean.app/',
     'website_name': 'YutMp3',
     "domain_extension": "Com",
     "email": "admin@yutmp3.com"
