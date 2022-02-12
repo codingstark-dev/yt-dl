@@ -5,6 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const url = req.query.url;
     const title = req.query.title;
     const type = req.query.type;
+    console.log(url)
     var options: AxiosRequestConfig = {
         url: url as string,
         method: "GET",
@@ -30,6 +31,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     "Content-Disposition",
                     `attachment; filename=${title}.mp4`
                 );
+                res.setHeader("Content-Type", "video/mp4");
+
                 return axios(options)
                     .then(function (response) {
                         new Promise<void>((resolve, reject) => {
@@ -45,8 +48,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } else if (type == "mp3") {
                 res.setHeader(
                     "Content-Disposition",
-                    `attachment; filename=${title}.mp3`
+                    `attachment; filename=${title}.mp3`,
+
+
                 );
+                res.setHeader("Content-Type", "audio/mp3");
+                return axios(options)
+                    .then(function (response) {
+                        return response.data.pipe(res);
+
+                        // ....
+                    })
+                    .catch((err) => {
+                        return res.status(500).json(err);
+                    });
+            } else if (type == "m4a") {
+                res.setHeader(
+                    "Content-Disposition",
+                    `attachment; filename=${title}.m4a`
+                );
+                res.setHeader("Content-Type", "audio/mp4");
+
                 return axios(options)
                     .then(function (response) {
                         return response.data.pipe(res);

@@ -2,10 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 
 import About from "../components/About";
+import download from "downloadjs";
 
 import Display from "../components/display";
 import { Adsense1, Adsense2, Adsense3 } from "../components/adsense";
-
 import Layout from "../components/layout";
 import { MetaProps } from "../types/layout";
 import { useRouter } from "next/router";
@@ -13,6 +13,7 @@ import blogPosts from "../post/home.json";
 import { GetStaticPropsContext } from "next";
 import { env } from "process";
 import { SiteDetails } from "../setup";
+import Link from "next/link";
 
 export default function Home({ postData }) {
   const [Loading, setLoading] = useState(false);
@@ -23,6 +24,21 @@ export default function Home({ postData }) {
   const [TimeoutError, setTimeoutError] = useState(null);
   const { locale, locales, asPath } = useRouter();
 
+  let tempUrl = "";
+  // const downloader = (e) => {
+  //   fetch(
+  //     `http://localhost:3000/api/download/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DvzvkeOIDFuw&title=Powfu%20sleeping%20%20popular%20girl%20typical%20boy%20Official%20Audio`
+  //   )
+  //     .then((res) => res.blob())
+  //     .then((blob) => {
+  //       const sizeInBytes = blob.size;
+  //       console.log("sizeInBytes: ", sizeInBytes);
+  //       if (sizeInBytes <= 0) {
+  //       } else {
+  //         download(blob, `${"title"}.mp4`, "video/mp4");
+  //       }
+  //     });
+  // };
   const setErrorData = (err) => {
     if (TimeoutError) {
       TimeoutError.map((e) => clearTimeout(e));
@@ -79,6 +95,7 @@ export default function Home({ postData }) {
     // const isInstagramUrl = instagramUrlChecker(Url);
     let res;
     // if (isInstagramUrl) {
+    tempUrl = Url;
     try {
       res = await axios.post("/api/yt", {
         url: Url,
@@ -93,7 +110,7 @@ export default function Home({ postData }) {
         setErrorD("Invalid URL");
       } else {
         setData(res.data);
-        setUrl("");
+        // setUrl("");
         setLoading(false);
       }
     } catch (err) {
@@ -132,9 +149,8 @@ export default function Home({ postData }) {
           </span>
           hello <b className="alert_link transition-all">Check it out on codingstark</b>
         </div> */}
-          <h1 className="text-3xl font-bold text-center">
-            {postData.heading}
-          </h1>
+          <h1 className="text-3xl font-bold text-center">{postData.heading}</h1>
+     
           {/* <Adsense1 /> */}
           {/* {!Data && ( */}
           <div
@@ -146,7 +162,10 @@ export default function Home({ postData }) {
           >
             <input
               id="fb-input"
-              onChange={(e) => setUrl(e.target.value)}
+              onChange={(e) => {
+                setUrl(e.target.value);
+                // tempUrl = e.target.value;
+              }}
               value={Url}
               autoComplete="off"
               className="w-full bg-transparent focus:outline-none px-2 mr-2"
@@ -178,12 +197,12 @@ export default function Home({ postData }) {
                   ></path>
                 </svg>
               )}
-              {!Loading && "START"}
+              {!Loading && "CONVERT"}
             </button>
           </div>
           {/* )} */}
           {Data && Data?.formats?.length != 0 ? (
-            <Display {...Data}></Display>
+            <Display Data={Data} Url={Url}></Display>
           ) : (
             <div />
           )}
