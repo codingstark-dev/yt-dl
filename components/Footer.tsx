@@ -48,7 +48,7 @@ export default function Footer() {
         <span className="text-red-500 font-bold">
           <a href="https://codingstark.com" rel="sponsored"> */}
             {" "}
-            {/* */}CodingStark
+            {/* codingStark */}
           {/* </a>{" "} */}
         {/* // </span>{" "} */}
         {/* ade with */}
