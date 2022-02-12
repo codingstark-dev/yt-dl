@@ -982,7 +982,7 @@
   dependencies:
     "reusify" "^1.0.4"
 
-"ffmpeg-static@^4.4.1":
+"ffmpeg-static@*", "ffmpeg-static@^4.4.1":
   "integrity" "sha512-gyGTIf5kgmLDmH7Rwj8vMmNK46bjXKKofHS2gY+LUqoTe/iybVuTuvnhJQR2tZHlKlDG7A/BIH7cRa2jWDKgWw=="
   "resolved" "https://registry.npmjs.org/ffmpeg-static/-/ffmpeg-static-4.4.1.tgz"
   "version" "4.4.1"
@@ -2164,7 +2164,15 @@
   "resolved" "https://registry.npmjs.org/yaml/-/yaml-1.10.2.tgz"
   "version" "1.10.2"
 
-"ytdl-core@^4.10.1":
+"ytdl-core-muxer@^1.0.1":
+  "integrity" "sha512-EKf7ijmmKoiEqwO2q3NHA1oVbJnzZhktjLKiuvLNIdGxWaRbd465dMf9iog3OjnmVPJJtKfHJae3nV3mWZkTJg=="
+  "resolved" "https://registry.npmjs.org/ytdl-core-muxer/-/ytdl-core-muxer-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "ffmpeg-static" "*"
+    "ytdl-core" "*"
+
+"ytdl-core@*", "ytdl-core@^4.10.1":
   "integrity" "sha512-idBhW+e7HCzs5fR5cqp7Ci+mJhEch41YAaWabYlneQFCL6IGf6Hycv99yVx01Zl1Ci0t/70faOelMSrXaQTE/A=="
   "resolved" "https://registry.npmjs.org/ytdl-core/-/ytdl-core-4.10.1.tgz"
   "version" "4.10.1"
