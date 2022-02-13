@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import ytdl from "ytdl-core";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const url = req.query.url;
@@ -52,16 +53,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
                 );
+                // console.log(url)
                 res.setHeader("Content-Type", "audio/mp3");
-                return axios(options)
-                    .then(function (response) {
-                        return response.data.pipe(res);
+                return ytdl(url as string, { quality: 'highestaudio' }).pipe(res)
+                // return axios(options)
+                //     .then(function (response) {
+                //         return response.data.pipe(res);
 
-                        // ....
-                    })
-                    .catch((err) => {
-                        return res.status(500).json(err);
-                    });
+                //         // ....
+                //     })
+                //     .catch((err) => {
+                //         return res.status(500).json(err);
+                //     });
             } else if (type == "m4a") {
                 res.setHeader(
                     "Content-Disposition",

@@ -14,7 +14,7 @@ const Display = ({ Data, Url }): JSX.Element => {
     // 64, 128,
     192, 256, 320,
   ];
-  console.log(Data)
+  console.log(Data);
   // const [data, dataSet] = useState<Array<any>>([]);
 
   // const fetchMyAPI = useCallback(async () => {
@@ -89,15 +89,18 @@ const Display = ({ Data, Url }): JSX.Element => {
                         : "audio" || "audio"
                         ? "MP3"
                         : ""}
-                      <br /> {e.audioBitrate}Kbps
+                      <br /> {e.audioBitrate == 160 ? 320 : e.audioBitrate}Kbps
                     </td>
                     <td className="border px-4 py-2 text-sm">Audio</td>
                     <td className="border px-4 py-2">
                       <Link
                         href={`/api/dl?url=${encodeURIComponent(
-                          e.url
+                          Url
                         )}&type=mp3&title=${encodeURIComponent(
-                          Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+                          Data?.videoDetails.title.replace(/[^\w\s]/gi, "") +
+                            ` ${
+                              e.audioBitrate == 160 ? 320 : e.audioBitrate
+                            }"Kbps"`
                         )}`}
                         passHref
                         locale={false}
@@ -134,14 +137,14 @@ const Display = ({ Data, Url }): JSX.Element => {
                     locale={false}
                   >
                     {/* <a className="text-blue-500 hover:text-blue-700"> */}
-                    {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                    {/* <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+              {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+              {/* <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
                       Download
                     </button> */}
-                    {/* </a> */}
-                  {/* </Link> */}
-                {/* </td> */}
-              {/* </tr> */} 
+              {/* </a> */}
+              {/* </Link> */}
+              {/* </td> */}
+              {/* </tr> */}
             </tbody>
           </table>
           <br />
