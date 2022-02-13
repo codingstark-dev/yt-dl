@@ -10,7 +10,10 @@ const Display = ({ Data, Url }): JSX.Element => {
   if (!Data) {
     return <div />;
   }
-  let listOFbit = [64, 128, 192, 256, 320];
+  let listOFbit = [
+    // 64, 128,
+    192, 256, 320,
+  ];
   // const [data, dataSet] = useState<Array<any>>([]);
 
   // const fetchMyAPI = useCallback(async () => {
