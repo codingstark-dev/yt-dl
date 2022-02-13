@@ -14,6 +14,7 @@ const Display = ({ Data, Url }): JSX.Element => {
     // 64, 128,
     192, 256, 320,
   ];
+  console.log(Data)
   // const [data, dataSet] = useState<Array<any>>([]);
 
   // const fetchMyAPI = useCallback(async () => {
@@ -78,21 +79,23 @@ const Display = ({ Data, Url }): JSX.Element => {
               </tr>
             </thead>
             <tbody>
-              {listOFbit.map((e, index) => {
-                return (
+              {Data?.formats.map((e, index) => {
+                return e.hasAudio == true && e.hasVideo == false ? (
                   <tr key={index}>
                     <td className="border px-4 py-2 text-sm">
-                      MP3 <br />
-                      {e}Kbps
+                      {e.mimeType.split(";")[0].split("/")[0] == "video" &&
+                      "video"
+                        ? "MP4"
+                        : "audio" || "audio"
+                        ? "MP3"
+                        : ""}
+                      <br /> {e.audioBitrate}Kbps
                     </td>
                     <td className="border px-4 py-2 text-sm">Audio</td>
                     <td className="border px-4 py-2">
                       <Link
                         href={`/api/dl?url=${encodeURIComponent(
-                          SiteDetails.website +
-                            "/api/mp3?url=" +
-                            Url +
-                            `&bit=${e}&type=mp3`
+                          e.url
                         )}&type=mp3&title=${encodeURIComponent(
                           Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
                         )}`}
@@ -108,9 +111,11 @@ const Display = ({ Data, Url }): JSX.Element => {
                       </Link>
                     </td>
                   </tr>
+                ) : (
+                  <tr></tr>
                 );
               })}
-              <tr>
+              {/* <tr>
                 <td className="border px-4 py-2 text-sm">
                   M4a <br /> High Quality
                 </td>
@@ -130,15 +135,15 @@ const Display = ({ Data, Url }): JSX.Element => {
                   >
                     {/* <a className="text-blue-500 hover:text-blue-700"> */}
                     {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                    <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                    {/* <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
                       Download
-                    </button>
+                    </button> */}
                     {/* </a> */}
-                  </Link>
-                </td>
-              </tr>
+                  {/* </Link> */}
+                {/* </td> */}
+              {/* </tr> */} 
             </tbody>
-          </table>{" "}
+          </table>
           <br />
           {/* create table */}
           <h4 className="font-bold">Video -</h4>
@@ -197,7 +202,7 @@ const Display = ({ Data, Url }): JSX.Element => {
                     </td>
                   </tr>
                 ) : (
-                  ""
+                  <tr></tr>
                 );
               })}
               {/* <tr>
