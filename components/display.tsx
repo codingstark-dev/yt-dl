@@ -97,10 +97,10 @@ const Display = ({ Data, Url }): JSX.Element => {
                         locale={false}
                       >
                         {/* <a className="text-blue-500 hover:text-blue-700"> */}
-                          {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                          <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
-                            Download
-                          </button>
+                        {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+                        <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                          Download
+                        </button>
                         {/* </a> */}
                       </Link>
                     </td>
@@ -126,10 +126,10 @@ const Display = ({ Data, Url }): JSX.Element => {
                     locale={false}
                   >
                     {/* <a className="text-blue-500 hover:text-blue-700"> */}
-                      {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                      <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
-                        Download
-                      </button>
+                    {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+                    <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                      Download
+                    </button>
                     {/* </a> */}
                   </Link>
                 </td>
@@ -185,10 +185,10 @@ const Display = ({ Data, Url }): JSX.Element => {
                         // locale={false}
                       >
                         {/* <a className="text-blue-500 hover:text-blue-700"> */}
-                          {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                          <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
-                            Download
-                          </button>
+                        {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+                        <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                          Download
+                        </button>
                         {/* </a> */}
                       </Link>
                     </td>
@@ -197,7 +197,7 @@ const Display = ({ Data, Url }): JSX.Element => {
                   ""
                 );
               })}
-              <tr>
+              {/* <tr>
                 <td className="border px-4 py-2 text-sm">
                   Mp4 <br /> High Quality
                 </td>
@@ -217,14 +217,14 @@ const Display = ({ Data, Url }): JSX.Element => {
                     // locale={false}
                   >
                     {/* <a className="text-blue-500 hover:text-blue-700"> */}
-                      {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                      <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+              {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+              {/* <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
                         Download
                       </button>
                     {/* </a> */}
-                  </Link>
+              {/* </Link>
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
           {/* 
