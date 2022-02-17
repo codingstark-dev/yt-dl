@@ -2,10 +2,10 @@ import cp from 'child_process';
 import readline from 'readline';
 // External modules
 import ffmpeg from 'fluent-ffmpeg';
-import ffmpegs from 'ffmpeg-static';
+// import ffmpegs from 'ffmpeg-static';
 import ytdl from "ytdl-core";
 import { NextApiRequest, NextApiResponse } from 'next';
-import ytmux from 'ytdl-core-muxer';
+// import ytmux from 'ytdl-core-muxer';
 import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 // Global constants

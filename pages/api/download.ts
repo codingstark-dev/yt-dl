@@ -1,14 +1,14 @@
-import readline from 'readline';
+// import readline from 'readline';
 // External modules
-import ytdl from "ytdl-core";
+// import ytdl from "ytdl-core";
 import { NextApiRequest, NextApiResponse } from 'next';
 import ytmux from 'ytdl-core-muxer';
 // Global constants
-const ref = 'https://www.youtube.com/watch?v=LPM1sY0ipNM';
-import ffmpegPath from 'ffmpeg-static';
-import cp from 'child_process';
-import stream from 'stream';
-import download from 'downloadjs';
+// const ref = 'https://www.youtube.com/watch?v=LPM1sY0ipNM';
+// import ffmpegPath from 'ffmpeg-static';
+// import cp from 'child_process';
+// import stream from 'stream';
+// import download from 'downloadjs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const url = req.query.url;
