@@ -47,7 +47,7 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           port: ${{ secrets.DEPLOY_PORT }}
           username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
+          password: ${{ secrets.DEPLOY_KEY }}
           envs: GITHUB_USERNAME, GITHUB_TOKEN
           script: |
             docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
@@ -55,3 +55,14 @@ jobs:
             docker stop containername
             docker system prune -f
             docker run --name containername -dit -p 3000:3000 ghcr.io/my_github_username/my_repository_name/my_image_name:latest
+          # with:
+          #   host: ${{ secrets.HOST }}
+          #   username: ${{ secrets.USERNAME }}
+          #   password: ${{ secrets.PASSWORD }}
+          #   port: ${{ secrets.PORT }}
+          #   envs: GITHUB_USERNAME, GITHUB_TOKEN
+          #   script: |
+          #     docker stop $(docker ps -a -q)
+          #     docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+          #     docker pull docker.pkg.github.com/my_github_username/my_repository_name/my_image_name:latest
+          #     docker run -dit -p 80:80 docker.pkg.github.com/my_github_username/my_repository_name/my_image_name:latest
