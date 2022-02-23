@@ -1,10 +1,12 @@
 import axios, { AxiosRequestConfig } from "axios";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import ytdl from "ytdl-core";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const url = req.query.url;
     const title = req.query.title;
     const type = req.query.type;
+    const bit = req.query.bit;
     // console.log(url)
     var options: AxiosRequestConfig = {
         url: url as string,
@@ -32,19 +34,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     `attachment; filename=${title}.mp4`
                 );
                 res.setHeader("Content-Type", "video/mp4");
+                // res.setHeader("Content-Type", "audio/mp3");
+                console.log(bit)
 
-                return axios(options)
-                    .then(function (response) {
-                        new Promise<void>((resolve, reject) => {
-                            return response.data.pipe(res).on('finish', () => resolve())
-                                .on('error', e => reject(e));
-                        })
+                return ytdl(url as string, { quality: bit }).pipe(res)
+                // return axios(options)
+                //     .then(function (response) {
+                //         new Promise<void>((resolve, reject) => {
+                //             return response.data.pipe(res).on('finish', () => resolve())
+                //                 .on('error', e => reject(e));
+                //         })
 
-                        // ....
-                    })
-                    .catch((err) => {
-                        return res.status(500).json(err);
-                    });
+                //         // ....
+                //     })
+                //     .catch((err) => {
+                //         return res.status(500).json(err);
+                //     });
             } else if (type == "mp3") {
                 res.setHeader(
                     "Content-Disposition",
@@ -53,15 +58,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 );
                 res.setHeader("Content-Type", "audio/mp3");
-                return axios(options)
-                    .then(function (response) {
-                        return response.data.pipe(res);
+                return ytdl(url as string, { quality: "highestaudio" }).pipe(res)
 
-                        // ....
-                    })
-                    .catch((err) => {
-                        return res.status(500).json(err);
-                    });
+                // return axios(options)
+                //     .then(function (response) {
+                //         return response.data.pipe(res);
+
+                //         // ....
+                //     })
+                //     .catch((err) => {
+                //         return res.status(500).json(err);
+                //     });
             } else if (type == "m4a") {
                 res.setHeader(
                     "Content-Disposition",

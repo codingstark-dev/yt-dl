@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffmpeg/core": "^0.8.3",
+    "@ffmpeg/ffmpeg": "^0.9.4",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@vitalets/google-translate-api": "^7.0.0",

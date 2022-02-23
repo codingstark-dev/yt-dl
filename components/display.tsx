@@ -4,9 +4,15 @@ import { useRouter } from "next/router";
 import { SiteDetails } from "../setup";
 import Image from "next/image";
 import axios from "axios";
+import { fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
+import { useContext } from "react";
+import FFmpegContext from "../context/ffmpegContext";
+
 // import { useCallback, useEffect, useState } from "react";
 
 const Display = ({ Data, Url }): JSX.Element => {
+  const ffmpeg = useContext<FFmpeg>(FFmpegContext);
+
   if (!Data) {
     return <div />;
   }
@@ -33,6 +39,71 @@ const Display = ({ Data, Url }): JSX.Element => {
   const fetchContentLength = async (url) => {
     let res = await axios.head(url);
     console.log(res.headers["content-length"]);
+  };
+
+  const mergeBtn = async (bit) => {
+    let responsevid = await axios.get(
+      `/api/dl?url=${Url}&bit=${bit}&type=mp4&title=${encodeURIComponent(
+        "sdasdsad"
+      )}`,
+      {
+        responseType: "arraybuffer",
+      }
+    );
+    let responseMp3 = await axios.get(
+      `/api/dl?url=${Url}&type=mp3&title=${encodeURIComponent("sdasdsad")}`,
+      {
+        responseType: "arraybuffer",
+      }
+    );
+
+    // `/api/dl?url=${encodeURIComponent(
+    //   "https://rr3---sn-cvh7knle.googlevideo.com/videoplayback?expire=1645496895&ei=3vUTYpftOfefg8UPsryi-Ac&ip=103.124.109.75&id=o-AHBPBz0W113TcIB9L6aPNxKLFTEMCTO291ANMIc1ljcu&itag=136&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=9P&mm=31%2C29&mn=sn-cvh7knle%2Csn-cvh76nls&ms=au%2Crdu&mv=m&mvi=3&pl=24&gcr=in&initcwndbps=970000&spc=4ocVC87pBiLtoRYHuQFOQ8Ykj-79&vprv=1&mime=video%2Fmp4&ns=HRQpm2y_y6GVrqNYk6fDvfYG&gir=yes&clen=19099235&dur=173.916&lmt=1627682196763754&mt=1645474845&fvip=4&keepalive=yes&fexp=24001373%2C24007246&c=WEB&txp=5532434&n=BAHOG37AH3NPng&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cgcr%2Cspc%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAIFXZ3Dd9CY2ey7_OfRoeKEBtNUyBWqrCOqWdYhtm692AiBnmlcNSf5ghW6kZ-1G485zxNObJfnkT6xnwxEkeYRiyw%3D%3D&sig=AOq0QJ8wRQIgXs5hO_TElQxgqjAXeZKAUnlHGgZq4jvhZw_5pFTNwFkCIQCAoPSU9b6kBueprkzYtTtDFnQHCImko8cGJJUKErp16w%3D%3D"
+    // )}&type=mp3&title=${encodeURIComponent("title")}`;
+    // const responsevid = await fetch(
+    //   `/api/dl?url=${encodeURIComponent(
+    //     "https://rr4---sn-cvh76nls.googlevideo.com/videoplayback?expire=1645583403&ei=y0cVYprMDuO13LUPntiOuA4&ip=103.124.109.72&id=o-AHv8MI1u0BZe-7VW8YDdoEI1RxnTrE2ZZsylWyqI1dfW&itag=135&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=9P&mm=31%2C29&mn=sn-cvh76nls%2Csn-cvh7knle&ms=au%2Crdu&mv=m&mvi=4&pl=24&gcr=in&initcwndbps=812500&spc=4ocVC45HWJnPxieQ_DLC9RJuta9z&vprv=1&mime=video%2Fmp4&ns=I_mI5A2_E0r2XFAVnm07RwwG&gir=yes&clen=10638007&dur=173.916&lmt=1627682196876997&mt=1645561491&fvip=3&keepalive=yes&fexp=24001373%2C24007246&c=WEB&txp=5532434&n=0ihB6DtV2xyxxA&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cgcr%2Cspc%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhAKsWT0knZMQSAr_DZrFUmhpLq9eLk34TPwqELwbcBEJ3AiEAw3BaBvWFwF5I5rpjr9p7MpXLX6BlRSn1viwTO2K9xl4%3D&sig=AOq0QJ8wRAIgK963wTnE3b0Ct9AV6WxZtNSIERy1aZw2VB6ANUs49rkCIEstLfXnXifySU39S_966CbSua2FDl0GP0wP1e-ucwOW"
+    //   )}&type=mp4&title=${encodeURIComponent("s")}`
+    // );
+    // const videoBuffer = await responsevid.arrayBuffer();
+    // const response = await fetch(
+    //   `/api/dl?url=${encodeURIComponent(
+    //     "https://rr4---sn-cvh76nls.googlevideo.com/videoplayback?expire=1645583403&ei=y0cVYprMDuO13LUPntiOuA4&ip=103.124.109.72&id=o-AHv8MI1u0BZe-7VW8YDdoEI1RxnTrE2ZZsylWyqI1dfW&itag=140&source=youtube&requiressl=yes&mh=9P&mm=31%2C29&mn=sn-cvh76nls%2Csn-cvh7knle&ms=au%2Crdu&mv=m&mvi=4&pl=24&gcr=in&initcwndbps=812500&spc=4ocVC45HWJnPxieQ_DLC9RJuta9z&vprv=1&mime=audio%2Fmp4&ns=I_mI5A2_E0r2XFAVnm07RwwG&gir=yes&clen=2816517&dur=173.987&lmt=1627680993600045&mt=1645561491&fvip=3&keepalive=yes&fexp=24001373%2C24007246&c=WEB&txp=5532434&n=0ihB6DtV2xyxxA&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cgcr%2Cspc%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgEFiIuN7b-1R67-UTFzhRIawSMhUDT3UXXoPUFjMJgOsCIQCot4EExkrCu4Ke9styoVQV2rZzNNkw-mZbczAxfJYefw%3D%3D&sig=AOq0QJ8wRAIgbkjsH1s-7mIrT8IO5qffpUNgGUFAalwIR1zlQ4KfGLECIAjyVnOjUzQp3X_SvYIrGUhD3Oyg6kDrFG89xQRX8p3S"
+    //   )}&type=mp3&title=${encodeURIComponent("s")}`
+    // );
+    // console.log(response.text);
+    // const audioBuffer = await response.arrayBuffer();
+    // console.log(videoBuffer, audioBuffer);
+    if (!ffmpeg.isLoaded()) {
+      await ffmpeg.load();
+    }
+    if (responsevid && responsevid) {
+      ffmpeg.FS("writeFile", "test.mp4", new Uint8Array(responsevid.data));
+      ffmpeg.FS("writeFile", "test.mp3", new Uint8Array(responseMp3.data));
+      await ffmpeg.run(
+        "-i",
+        "test.mp4",
+        "-i",
+        "test.mp3",
+        "-c",
+        "copy",
+        "out.mp4"
+      );
+      const data = ffmpeg.FS("readFile", "out.mp4");
+      let finalUrl = URL.createObjectURL(new Blob([data], { type: "video/mp4" }));
+      console.log(URL.createObjectURL(new Blob([data], { type: "video/mp4" })));
+      const a = document.createElement("a");
+      a.setAttribute(
+        "download",
+        `test.mp4`
+      );
+      a.setAttribute("href", finalUrl);
+      a.style.setProperty("display", "node");
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   };
   let instagramVideoDisplay = () => {
     return (
@@ -152,7 +223,7 @@ const Display = ({ Data, Url }): JSX.Element => {
             </thead>
             <tbody>
               {Data?.formats.map((e, index) => {
-                return e.hasAudio == true && e.hasVideo == true ? (
+                return e.hasVideo == true ? (
                   <tr key={index}>
                     <td className="border px-4 py-2 text-sm">
                       {e.mimeType.split(";")[0].split("/")[0] == "video" &&
@@ -194,6 +265,7 @@ const Display = ({ Data, Url }): JSX.Element => {
                         </button>
                         {/* </a> */}
                       </Link>
+                      <button onClick={() => mergeBtn(e.itag)}>dd</button>
                     </td>
                   </tr>
                 ) : (
