@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const bit = req.query.bit;
     res.setHeader('Cache-Control', 's-maxage=86400');
 
-    console.log(bit)
     // console.log(url)
     var options: AxiosRequestConfig = {
         url: url as string,

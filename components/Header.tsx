@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <div className="dark:bg-gray-900 dark:border-gray-700 bg-gray-100 border-b-2 border-gray-200 w-full h-[4rem]">
       <div className="max-w-4xl mx-auto w-full p-3 flex justify-between">
-        <Link href="/" locale={false}>
+        <Link href="/en7">
           <a className="font-bold my-auto">
             {SiteDetails.website_name}.
             <span className="text-red-600">{SiteDetails.domain_extension}</span>
