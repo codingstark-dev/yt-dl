@@ -471,6 +471,13 @@
   "resolved" "https://registry.npmjs.org/async/-/async-3.2.3.tgz"
   "version" "3.2.3"
 
+"audio-encoder@^1.0.4":
+  "integrity" "sha512-B9SH/AqqyrrDtSY51QXZoDjFmLeDgBLi7yDKI4wv8w3uzIPTsj0WEnzUiKNLmEANEJygxTjtYUGYVOSVaNNhjw=="
+  "resolved" "https://registry.npmjs.org/audio-encoder/-/audio-encoder-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "lamejs" "1.2.1"
+
 "autoprefixer@^10.0.2", "autoprefixer@10.4.1":
   "integrity" "sha512-B3ZEG7wtzXDRCEFsan7HmR2AeNsxdJB0+sEC0Hc5/c2NbhJqPwuZm+tn233GBVw82L+6CtD6IPSfVruwKjfV3A=="
   "resolved" "https://registry.npmjs.org/autoprefixer/-/autoprefixer-10.4.1.tgz"
@@ -1371,6 +1378,13 @@
   dependencies:
     "json-buffer" "3.0.0"
 
+"lamejs@1.2.1":
+  "integrity" "sha512-s7bxvjvYthw6oPLCm5pFxvA84wUROODB8jEO2+CE1adhKgrIvVOlmMgY8zyugxGrvRaDHNJanOiS21/emty6dQ=="
+  "resolved" "https://registry.npmjs.org/lamejs/-/lamejs-1.2.1.tgz"
+  "version" "1.2.1"
+  dependencies:
+    "use-strict" "1.0.1"
+
 "lilconfig@^2.0.3":
   "integrity" "sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA=="
   "resolved" "https://registry.npmjs.org/lilconfig/-/lilconfig-2.0.4.tgz"
@@ -2163,6 +2177,11 @@
   "version" "3.0.0"
   dependencies:
     "prepend-http" "^2.0.0"
+
+"use-strict@1.0.1":
+  "integrity" "sha1-C7gNlPSaSgUZK4Sox9NOlfGn46A="
+  "resolved" "https://registry.npmjs.org/use-strict/-/use-strict-1.0.1.tgz"
+  "version" "1.0.1"
 
 "use-subscription@1.5.1":
   "integrity" "sha512-Xv2a1P/yReAjAbhylMfFplFKj9GssgTwN7RlcTxBujFQcloStWNDQdc4g4NRWH9xS4i/FDk04vQBptAXoF3VcA=="

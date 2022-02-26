@@ -1,17 +1,17 @@
 import axios, { AxiosRequestConfig } from "axios";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import ytdl from "ytdl-core";
-import { createFFmpeg, fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
-import { useContext } from "react";
-const ffmpeg = createFFmpeg({
-    log: true, logger: console.log,
-});
+import ffmpeg from 'fluent-ffmpeg';
+import ffmpegPath from '@ffmpeg-installer/ffmpeg';
+ffmpeg.setFfmpegPath(ffmpegPath.path);
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const url = req.query.url;
     const title = req.query.title;
     const type = req.query.type;
     const bit = req.query.bit;
+    res.setHeader('Cache-Control', 's-maxage=86400');
 
+    console.log(bit)
     // console.log(url)
     var options: AxiosRequestConfig = {
         url: url as string,
@@ -102,7 +102,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 //     //         return res.status(500).json(err);
                 //     //     });
                 // }
-                 return ytdl(url as string, { quality: "highestaudio" }).pipe(res)
+                let stream = ytdl(url as string, { quality: 'highestaudio' })
+                return ffmpeg(stream)
+                    // .inputFormat('mp3')
+
+                    .audioBitrate(bit as string)
+                    // .withAudioCodec("libmp3lame")
+                    .toFormat(type as string).pipe(res, { end: true })
+                    // .saveToFile(`mp3/${'id'}.mp3`).on('progress', p => {
+                    //     readline.cursorTo(process.stdout, 0);
+                    //     process.stdout.write(`${p.targetSize}kb downloaded`);
+                    // })
+                    .on("error", function (err) {
+                        console.log('error', err)
+                        return res.json(err)
+                    })
+                    .on("end", function () {
+                    })
             } else if (type == "m4a") {
                 res.setHeader(
                     "Content-Disposition",

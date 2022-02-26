@@ -221,31 +221,26 @@ const Display = ({ Data, Url }): JSX.Element => {
                     </td>
                     <td className="border px-4 py-2 text-sm">Audio</td>
                     <td className="border px-4 py-2">
-                      {/* <Link
-                        href={`/api/dl?url=${encodeURIComponent(
-                          SiteDetails.website +
-                            "/api/mp3?url=" +
-                            Url +
-                            `&bit=${e}&type=mp3`
-                        )}&type=mp3&title=${encodeURIComponent(
+                      <Link
+                        href={`/api/dl?url=${Url}&type=mp3&bit=${e}&title=${encodeURIComponent(
                           Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
                         )}`}
                         passHref
                         locale={false}
-                      > */}
-                      {/* <a className="text-blue-500 hover:text-blue-700"> */}
-                      {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
-                      <button
-                        onClick={() => {
-                          openModal();
-                          mergeBtn(e);
-                        }}
-                        className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300"
                       >
-                        Download
-                      </button>
-                      {/* </a> */}
-                      {/* </Link> */}
+                        {/* <a className="text-blue-500 hover:text-blue-700"> */}
+                        {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+                        <button
+                          // onClick={() => {
+                          //   openModal();
+                          //   mergeBtn(e);
+                          // }}
+                          className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300"
+                        >
+                          Download
+                        </button>
+                        {/* </a> */}
+                      </Link>
                     </td>
                   </tr>
                 );
