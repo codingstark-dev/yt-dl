@@ -106,7 +106,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return ffmpeg(stream)
                     // .inputFormat('mp3')
 
-                    .audioBitrate(bit as string)
+                    .audioBitrate(bit as string).addInputOptions(['-threads 6'])
                     // .withAudioCodec("libmp3lame")
                     .toFormat(type as string).pipe(res, { end: true })
                     // .saveToFile(`mp3/${'id'}.mp3`).on('progress', p => {
