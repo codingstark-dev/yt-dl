@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+
 // import { useCallback, useEffect, useState } from "react";
 
 const Display = ({ Data, Url }): JSX.Element => {
