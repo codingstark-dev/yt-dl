@@ -9,12 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const title = req.query.title;
     const type = req.query.type;
     const bit = req.query.bit;
+    const dltype = req.query.dltype;
     res.setHeader('Cache-Control', 's-maxage=86400');
 
-    console.log(bit)
     // console.log(url)
-    var options: AxiosRequestConfig = {
-        url: url as string,
+    let options: AxiosRequestConfig = {
+        url: decodeURIComponent(url as string),
         method: "GET",
         responseType: "stream",
     };
@@ -102,23 +102,62 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 //     //         return res.status(500).json(err);
                 //     //     });
                 // }
-                let stream = ytdl(url as string, { quality: 'highestaudio' })
-                return ffmpeg(stream)
-                    // .inputFormat('mp3')
+                if (dltype == "youtubedl") {
 
-                    .audioBitrate(bit as string).addInputOptions(['-threads 6'])
-                    // .withAudioCodec("libmp3lame")
-                    .toFormat(type as string).pipe(res, { end: true })
-                    // .saveToFile(`mp3/${'id'}.mp3`).on('progress', p => {
-                    //     readline.cursorTo(process.stdout, 0);
-                    //     process.stdout.write(`${p.targetSize}kb downloaded`);
-                    // })
-                    .on("error", function (err) {
-                        console.log('error', err)
-                        return res.json(err)
-                    })
-                    .on("end", function () {
-                    })
+                    let fdata: AxiosRequestConfig = await axios.request(options)
+
+                    return ffmpeg(fdata.data)
+
+                        .audioBitrate(bit as string)
+                        // .withAudioCodec("libmp3lame")
+                        .toFormat(type as string).pipe(res, { end: true })
+                        // .saveToFile(`mp3/${'id'}.mp3`).on('progress', p => {
+                        //     readline.cursorTo(process.stdout, 0);
+                        //     process.stdout.write(`${p.targetSize}kb downloaded`);
+                        // })
+                        .on("error", function (err) {
+                            console.log('error', err)
+                            return res.json(err)
+                        })
+                        .on("end", function () {
+                            console.log("done")
+                        })
+                } else {
+                    let stream = ytdl(url as string, { quality: 'highestaudio' })
+                    return ffmpeg(stream)
+                        // .inputFormat('mp3')
+
+                        .audioBitrate(bit as string).addInputOptions(['-threads 6'])
+                        // .withAudioCodec("libmp3lame")
+                        .toFormat(type as string).pipe(res, { end: true })
+                        // .saveToFile(`mp3/${'id'}.mp3`).on('progress', p => {
+                        //     readline.cursorTo(process.stdout, 0);
+                        //     process.stdout.write(`${p.targetSize}kb downloaded`);
+                        // })
+                        .on("error", function (err) {
+                            console.log('error', err)
+                            return res.json(err)
+                        })
+                        .on("end", function () {
+                        })
+                }
+                // let stream = ytdl(url as string, { quality: 'highestaudio' })
+                // return ffmpeg(stream)
+                //     // .inputFormat('mp3')
+
+                //     .audioBitrate(bit as string).addInputOptions(['-threads 6'])
+                //     // .withAudioCodec("libmp3lame")
+                //     .toFormat(type as string).pipe(res, { end: true })
+                //     // .saveToFile(`mp3/${'id'}.mp3`).on('progress', p => {
+                //     //     readline.cursorTo(process.stdout, 0);
+                //     //     process.stdout.write(`${p.targetSize}kb downloaded`);
+                //     // })
+                //     .on("error", function (err) {
+                //         console.log('error', err)
+                //         return res.json(err)
+                //     })
+                //     .on("end", function () {
+                //     })
             } else if (type == "m4a") {
                 res.setHeader(
                     "Content-Disposition",

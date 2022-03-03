@@ -1,7 +1,7 @@
 // import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import ytdl from "ytdl-core";
-
+import youtubedl from 'youtube-dl-exec';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method !== "POST") {
@@ -65,15 +65,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // };
     let resp;
     try {
-        let info = await ytdl.getInfo(newUrl,);
+
+
+        // let insta = await youtubedl('https://www.instagram.com/p/CCRq_InFZ44', {
+        //     dumpSingleJson: true,
+        //     noWarnings: true,
+        //     // noCallHome: true,
+        //     noCheckCertificate: true,
+        //     preferFreeFormats: true,
+        //     youtubeSkipDashManifest: true,
+        //     referer: 'https://www.instagram.com/p/CCRq_InFZ44'
+        // })
+
+        // console.log(insta)
+        let info = await ytdl.getInfo(newUrl);
         // let videoData = ytdl(newUrl, { quality: 'highestaudio' })
         // videoData.on('info', (info) => {
         //     console.log(info);
         // }
 
         // );
-        let listOfData = []
-        let i = 0;
+        // let listOfData = []
+        // let i = 0;
 
         // let audio = ytdl.filterFormats(info.formats, 'audioonly');
         // let format = ytdl.chooseFormat(info.formats, { quality: '137 ' });
@@ -110,18 +123,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         //     if (info.formats.length == listOfData.length) {
         //         console.log(info.formats.length == listOfData.length, listOfData)
-        return res.json(info);
+
+        // let returnData = {
+        //     "videoDetails": info.videoDetails,
+        //     "formats": info.formats
+        // }
+        // let returnData1 = {
+        //     "videoDetails": { title: ytdownload.title },
+        //     "formats": ytdownload.formats
+        // }
+        return res.json({
+            api: 'ytdl',
+            data: info
+        });
         // 
         // }
         // }, 5000);
         // })
-    } catch (err) {
-        res.statusCode = 500;
-        console.error("[ERROR] - " + err.stack);
-        return res.json({
-            "errorData": err.stack,
-            "error": "An error occured while creating the request.",
-            "code": "request_error"
+    } catch (errs) {
+        console.log(errs)
+        return youtubedl(newUrl, {
+            dumpSingleJson: true,
+            // dumpJson: true,
+            noWarnings: true,
+            format: '140',
+            // noCallHome: true,
+            audioFormat: 'mp3',
+            noCheckCertificate: true,
+            preferFreeFormats: true,
+            extractAudio: true,
+            youtubeSkipDashManifest: true,
+            referer: newUrl
+        }).then(info => {
+
+            return res.json({
+                api: 'youtubedl',
+                data: info
+            });
+
+
+        }).catch(err => {
+            res.statusCode = 500;
+            console.error("[ERROR] - " + err.stack);
+            return res.json({
+                "errorData": err.stack,
+                "error": "An error occured while creating the request.",
+                "code": "request_error"
+            })
         });
     }
 

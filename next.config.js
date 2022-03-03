@@ -1,4 +1,6 @@
 module.exports = {
+  swcMinify: true,
+
   // trailingSlash: true,
 
   i18n: {
@@ -26,11 +28,12 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: "/en5",
+        destination: "/en7",
         permanent: true,
       },
     ];
   },
+
   async headers() {
     return [
       {

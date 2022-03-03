@@ -1,27 +1,8 @@
-import { DownloadIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { SiteDetails } from "../setup";
-import Image from "next/image";
-import axios from "axios";
-import { fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
-import { Fragment, useContext, useState } from "react";
-import FFmpegContext from "../context/ffmpegContext";
-import { Dialog, Transition } from "@headlessui/react";
 
 // import { useCallback, useEffect, useState } from "react";
 
 const Display = ({ Data, Url }): JSX.Element => {
-  const ffmpeg = useContext<FFmpeg>(FFmpegContext);
-  let [isOpen, setIsOpen] = useState(false);
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
   if (!Data) {
     return <div />;
   }
@@ -45,65 +26,65 @@ const Display = ({ Data, Url }): JSX.Element => {
   //   fetchMyAPI();
   // }, [fetchMyAPI]);
 
-  const fetchContentLength = async (url) => {
-    let res = await axios.head(url);
-    console.log(res.headers["content-length"]);
-  };
-  const mergeBtn = async (bit) => {
-    let head = await axios.head(
-      `/api/dl?url=${Url}&type=mp3&title=${encodeURIComponent(
-        Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
-      )}`
-    );
-    let responseMp3 = await axios.get(
-      `/api/dl?url=${Url}&type=mp3&title=${encodeURIComponent(
-        Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
-      )}`,
-      {
-        responseType: "arraybuffer",
-        onDownloadProgress: function (progressEvent) {
-          console.log("download", progressEvent);
-        },
-      }
-    );
-    console.log(head.headers["content-length"]);
+  // const fetchContentLength = async (url) => {
+  //   let res = await axios.head(url);
+  //   console.log(res.headers["content-length"]);
+  // };
+  // const mergeBtn = async (bit) => {
+  //   let head = await axios.head(
+  //     `/api/dl?url=${Url}&type=mp3&title=${encodeURIComponent(
+  //       Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+  //     )}`
+  //   );
+  //   let responseMp3 = await axios.get(
+  //     `/api/dl?url=${Url}&type=mp3&title=${encodeURIComponent(
+  //       Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+  //     )}`,
+  //     {
+  //       responseType: "arraybuffer",
+  //       onDownloadProgress: function (progressEvent) {
+  //         console.log("download", progressEvent);
+  //       },
+  //     }
+  //   );
+  //   console.log(head.headers["content-length"]);
 
-    if (!ffmpeg.isLoaded()) {
-      await ffmpeg.load();
-    }
-    if (responseMp3) {
-      ffmpeg.FS("writeFile", "test.mp3", new Uint8Array(responseMp3.data));
-      //  await ffmpeg.run("-i", "test.mp3", "-ab", "320k", "-f", "mp3", "out.mp3");
-      await ffmpeg.run(
-        "-i",
-        "test.mp3",
-        "-b:a",
-        `${bit}k`,
-        // "-map",
-        // "a",'-codec',"copy",
-        "out.mp3"
-      );
-      const data = ffmpeg.FS("readFile", "out.mp3");
-      let finalUrl = URL.createObjectURL(
-        new Blob([data], { type: "audio/mp3" })
-      );
-      console.log(URL.createObjectURL(new Blob([data], { type: "audio/mp3" })));
-      closeModal();
-      const a = document.createElement("a");
-      a.setAttribute(
-        "download",
-        `${encodeURIComponent(
-          Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
-        )}`
-      );
-      a.setAttribute("href", finalUrl);
-      a.style.setProperty("display", "node");
+  //   if (!ffmpeg.isLoaded()) {
+  //     await ffmpeg.load();
+  //   }
+  //   if (responseMp3) {
+  //     ffmpeg.FS("writeFile", "test.mp3", new Uint8Array(responseMp3.data));
+  //     //  await ffmpeg.run("-i", "test.mp3", "-ab", "320k", "-f", "mp3", "out.mp3");
+  //     await ffmpeg.run(
+  //       "-i",
+  //       "test.mp3",
+  //       "-b:a",
+  //       `${bit}k`,
+  //       // "-map",
+  //       // "a",'-codec',"copy",
+  //       "out.mp3"
+  //     );
+  //     const data = ffmpeg.FS("readFile", "out.mp3");
+  //     let finalUrl = URL.createObjectURL(
+  //       new Blob([data], { type: "audio/mp3" })
+  //     );
+  //     console.log(URL.createObjectURL(new Blob([data], { type: "audio/mp3" })));
+  //     closeModal();
+  //     const a = document.createElement("a");
+  //     a.setAttribute(
+  //       "download",
+  //       `${encodeURIComponent(
+  //         Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+  //       )}`
+  //     );
+  //     a.setAttribute("href", finalUrl);
+  //     a.style.setProperty("display", "node");
 
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-  };
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //   }
+  // };
   // const mergeBtn = async (bit) => {
   //   let responsevid = await axios.get(
   //     `/api/dl?url=${Url}&bit=${bit}&type=mp4&title=${encodeURIComponent(
@@ -168,14 +149,14 @@ const Display = ({ Data, Url }): JSX.Element => {
   //     document.body.removeChild(a);
   //   }
   // };
-  let instagramVideoDisplay = () => {
+  let youtubedl = () => {
     return (
       <>
         <div
           className="dark:border-gray-700 dark:bg-gray-900 bg-gray-100 border-2 border-gray-200 rounded-lg 
             p-4 mt-4 "
         >
-          <h2 className="text-xl font-semibold">{Data?.videoDetails.title}</h2>
+          <h2 className="text-xl font-semibold">{Data?.data.title}</h2>
           <br />
           {/* <img
                 className="h-32 rounded-lg bg-gray-500 border-2 dark:border-gray-700 border-gray-200 my-auto"
@@ -194,14 +175,7 @@ const Display = ({ Data, Url }): JSX.Element => {
             )}`}
             controls
           ></video> */}
-          <img
-            src={
-              Data?.videoDetails.thumbnails.sort((a, b) => a.height > b.height)[
-                Data?.videoDetails.thumbnails.length - 1
-              ].url
-            }
-            alt=""
-          />
+          <img src={Data?.data.thumbnail} alt="" />
           <br /> <h4 className="font-bold">Audio -</h4>
           <table className="table-auto w-full text-center">
             <thead>
@@ -222,8 +196,8 @@ const Display = ({ Data, Url }): JSX.Element => {
                     <td className="border px-4 py-2 text-sm">Audio</td>
                     <td className="border px-4 py-2">
                       <Link
-                        href={`/api/dl?url=${Url}&type=mp3&bit=${e}&title=${encodeURIComponent(
-                          Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+                        href={`/api/dl?url=${encodeURIComponent(Data.data.url)}&type=mp3&dltype=${Data.api}&bit=${e}&title=${encodeURIComponent(
+                          Data?.data.title.replace(/[^\w\s]/gi, "")
                         )}`}
                         passHref
                         locale={false}
@@ -273,7 +247,7 @@ const Display = ({ Data, Url }): JSX.Element => {
                 </td>
               </tr> */}
             </tbody>
-          </table>{" "}
+          </table>
           <br />
           {/* create table */}
           <h4 className="font-bold">Video -</h4>
@@ -286,38 +260,21 @@ const Display = ({ Data, Url }): JSX.Element => {
               </tr>
             </thead>
             <tbody>
-              {Data?.formats.map((e, index) => {
-                return e.hasVideo == true && e.hasAudio == true ? (
+              {Data?.data.formats.map((e, index) => {
+                return e.asr != null && e.quality != 0 && e.height != null ? (
                   <tr key={index}>
                     <td className="border px-4 py-2 text-sm">
-                      {e.mimeType.split(";")[0].split("/")[0] == "video" &&
-                      "video"
-                        ? "MP4"
-                        : "audio" || "audio"
-                        ? "MP3"
-                        : ""}
-                      <br /> {e.quality}
+                      {e.format.includes("audio") ? "MP3" : "MP4"}
+                      <br />
+                      {e.height}p
                     </td>
-                    <td className="border px-4 py-2 text-sm">
-                      {e.hasAudio == true && e.hasVideo == true
-                        ? "Video + Audio"
-                        : e.hasAudio == true && e.hasVideo == false
-                        ? "Audio Only"
-                        : e.hasAudio == false && e.hasVideo == true
-                        ? "Video Only"
-                        : "Not Specified"}
-                    </td>
+                    <td className="border px-4 py-2 text-sm">Video + Audio</td>
                     <td className="border px-4 py-2">
                       <Link
                         href={`/api/dl?url=${encodeURIComponent(e.url)}&type=${
-                          e.mimeType.split(";")[0].split("/")[0] == "video" &&
-                          "video"
-                            ? "mp4"
-                            : "audio" || "audio"
-                            ? "mp3"
-                            : ""
+                          e.format.includes("audio") ? "mp3" : "mp4"
                         }&title=${encodeURIComponent(
-                          Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+                          Data?.data.title.replace(/[^\w\s]/gi, "")
                         )}`}
                         passHref
                         // locale={false}
@@ -332,7 +289,7 @@ const Display = ({ Data, Url }): JSX.Element => {
                     </td>
                   </tr>
                 ) : (
-                  ""
+                  <tr key={index}></tr>
                 );
               })}
               {/* <tr>
@@ -398,74 +355,250 @@ const Display = ({ Data, Url }): JSX.Element => {
               </button>
             </Link>
           </div> */}
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog
-              as="div"
-              className="fixed inset-0 z-10 overflow-y-auto"
-              onClose={() => setIsOpen(true)}
-            >
-              <div className="min-h-screen px-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Dialog.Overlay className="fixed inset-0" />
-                </Transition.Child>
-
-                {/* This element is to trick the browser into centering the modal contents. */}
-                <span
-                  className="inline-block h-screen align-middle"
-                  aria-hidden="true"
-                >
-                  &#8203;
-                </span>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
-                    >
-                      Downloading...
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Please wait while server preparing for file.
-                      </p>
-                    </div>
-
-                    {/* <div className="mt-4">
-                      <button
-                        type="button"
-                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                        onClick={closeModal}
-                      >
-                        Got it, thanks!
-                      </button>
-                    </div> */}
-                  </div>
-                </Transition.Child>
-              </div>
-            </Dialog>
-          </Transition>
         </div>
       </>
     );
   };
+  let ytdl = () => {
+    return (
+      <>
+        <div
+          className="dark:border-gray-700 dark:bg-gray-900 bg-gray-100 border-2 border-gray-200 rounded-lg 
+            p-4 mt-4 "
+        >
+          <h2 className="text-xl font-semibold">{Data?.data.videoDetails.title}</h2>
+          <br />
+          {/* <img
+                className="h-32 rounded-lg bg-gray-500 border-2 dark:border-gray-700 border-gray-200 my-auto"
+                // src={`api/dl?url=${encodeURIComponent(
+                //   Data.media.display_url
+                // )}&type=${"png"}&title=${Math.floor(
+                //   Math.random() * 100000000000
+                // )}`}
 
-  return <div>{Data ? instagramVideoDisplay() : ""}</div>;
+                src={Data.media.display_data}
+              /> */}
+          {/* <video
+            className="h-full w-72 rounded-lg m-auto bg-gray-500 border-2  dark:border-gray-700 border-gray-200 "
+            src={`/api/dl?url=${encodeURIComponent()}&type=${"mp4"}&title=${Math.floor(
+              Math.random() * 100000000000
+            )}`}
+            controls
+          ></video> */}
+          <img
+            src={
+              Data?.data.videoDetails.thumbnails.sort((a, b) => a.height > b.height)[
+                Data?.data.videoDetails.thumbnails.length - 1
+              ].url
+            }
+            alt=""
+          />
+          <br /> <h4 className="font-bold">Audio -</h4>
+          <table className="table-auto w-full text-center">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">File Type</th>
+                <th className="px-4 py-2">Type</th>
+                <th className="px-4 py-2">Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              {listOFbit.map((e, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="border px-4 py-2 text-sm">
+                      MP3 <br />
+                      {e}Kbps
+                    </td>
+                    <td className="border px-4 py-2 text-sm">Audio</td>
+                    <td className="border px-4 py-2">
+                      <Link
+                        href={`/api/dl?url=${Url}&type=mp3&dltype=${
+                          Data.api
+                        }&bit=${e}&title=${encodeURIComponent(
+                          Data?.data.videoDetails.title.replace(/[^\w\s]/gi, "")
+                        )}`}
+                        passHref
+                        locale={false}
+                      >
+                        {/* <a className="text-blue-500 hover:text-blue-700"> */}
+                        {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+                        <button
+                          // onClick={() => {
+                          //   openModal();
+                          //   mergeBtn(e);
+                          // }}
+                          className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300"
+                        >
+                          Download
+                        </button>
+                        {/* </a> */}
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+              {/* <tr>
+                <td className="border px-4 py-2 text-sm">
+                  M4a <br /> High Quality
+                </td>
+                <td className="border px-4 py-2 text-sm"> Audio</td>
+                <td className="border px-4 py-2 text-sm">
+                  <Link
+                    href={`/api/dl?url=${encodeURIComponent(
+                      SiteDetails.website +
+                        "/api/mp3?url=" +
+                        Url +
+                        `&bit=${320}&type=mp3`
+                    )}&type=m4a&title=${encodeURIComponent(
+                      Data?.data.videoDetails.title.replace(/[^\w\s]/gi, "")
+                    )}`}
+                    passHref
+                    locale={false}
+                  > */}
+              {/* <a className="text-blue-500 hover:text-blue-700"> */}
+              {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+              {/* <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                      Download
+                    </button> */}
+              {/* </a> */}
+              {/* </Link>
+                </td>
+              </tr> */}
+            </tbody>
+          </table>
+          <br />
+          {/* create table */}
+          <h4 className="font-bold">Video -</h4>
+          <table className="table-auto w-full text-center">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">File Type</th>
+                <th className="px-4 py-2">Type</th>
+                <th className="px-4 py-2">Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Data?.data.formats.map((e, index) => {
+                return e.hasVideo == true && e.hasAudio == true ? (
+                  <tr key={index}>
+                    <td className="border px-4 py-2 text-sm">
+                      {e.mimeType.split(";")[0].split("/")[0] == "video" &&
+                      "video"
+                        ? "MP4"
+                        : "audio" || "audio"
+                        ? "MP3"
+                        : ""}
+                      <br />
+                      {e.quality}
+                    </td>
+                    <td className="border px-4 py-2 text-sm">
+                      {e.hasAudio == true && e.hasVideo == true
+                        ? "Video + Audio"
+                        : e.hasAudio == true && e.hasVideo == false
+                        ? "Audio Only"
+                        : e.hasAudio == false && e.hasVideo == true
+                        ? "Video Only"
+                        : "Not Specified"}
+                    </td>
+                    <td className="border px-4 py-2">
+                      <Link
+                        href={`/api/dl?url=${encodeURIComponent(e.url)}&type=${
+                          e.mimeType.split(";")[0].split("/")[0] == "video" &&
+                          "video"
+                            ? "mp4"
+                            : "audio" || "audio"
+                            ? "mp3"
+                            : ""
+                        }&title=${encodeURIComponent(
+                          Data?.data.videoDetails.title.replace(/[^\w\s]/gi, "")
+                        )}`}
+                        passHref
+                        // locale={false}
+                      >
+                        {/* <a className="text-blue-500 hover:text-blue-700"> */}
+                        {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+                        <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                          Download
+                        </button>
+                        {/* </a> */}
+                      </Link>
+                    </td>
+                  </tr>
+                ) : (
+                  <tr key={index}></tr>
+                );
+              })}
+              {/* <tr>
+                <td className="border px-4 py-2 text-sm">
+                  Mp4 <br /> High Quality
+                </td>
+                <td className="border px-4 py-2 text-sm">Video + Audio</td>
+                <td className="border px-4 py-2 text-sm">
+                  <Link
+                    href={
+                      `/api/dl?url=` +
+                      SiteDetails.website +
+                      `/api/download?url=` +
+                      encodeURIComponent(Url) +
+                      `&title=${encodeURIComponent(
+                        Data?.videoDetails.title.replace(/[^\w\s]/gi, "")
+                      )}&type=mp4`
+                    }
+                    passHref
+                    // locale={false}
+                  >
+                    {/* <a className="text-blue-500 hover:text-blue-700"> */}
+              {/* <DownloadIcon className="h-6 w-6 text-center m-auto" /> Download */}
+              {/* <button className="p-1 pl-4 pr-4 bg-red-500 text-white text-lg rounded-md focus:border-4 border-blue-300">
+                        Download
+                      </button>
+                    {/* </a> */}
+              {/* </Link>
+                </td>
+              </tr> */}
+            </tbody>
+          </table>
+          {/* 
+          {Data.formats.map((e) => {
+            return (
+              <div>{`${e.mimeType.split(";")[0]} ${
+                e.hasAudio == true && e.hasVideo == true
+                  ? "Video + Audio"
+                  : e.hasAudio == true && e.hasVideo == false
+                  ? "Audio Only"
+                  : e.hasAudio == false && e.hasVideo == true
+                  ? "Video Only"
+                  : "Not Specified"
+              } ${e.quality}`}</div>
+            );
+          })} */}
+          {/* <Image src={}></Image> */}
+          {/* <h3 className="font-semibold">{Data.description}</h3> */}
+          {/* <div className=" h-auto justify-center items-center flex m-auto">
+            <Link
+              href={
+                SiteDetails.website +
+                `/api/dl?url=${encodeURIComponent(
+                  Data?.url
+                )}&type=${"mp4"}&title=${Math.floor(
+                  Math.random() * 100000000000
+                )}`
+              }
+              locale={false}
+            >
+              <button className="flex rounded-lg bg-red-500 mt-2 text-white   py-2 px-4 m-auto ml-auto">
+                <DownloadIcon className="w-6 h-6 mr-1" /> Download now
+              </button>
+            </Link>
+          </div> */}
+        </div>
+      </>
+    );
+  };
+  return (
+    <div>{Data ? (Data.api == "youtubedl" ? youtubedl() : ytdl()) : ""}</div>
+  );
 };
 
 export default Display;

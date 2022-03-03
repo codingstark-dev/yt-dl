@@ -13,15 +13,26 @@ const Head = ({ customMeta }: { customMeta?: MetaProps }): JSX.Element => {
     type: "website",
     ...customMeta,
   };
-  let router = useRouter();
+  const { locale, asPath } = useRouter();
+
   return (
     <NextHead>
       <title>{meta.title}</title>
       <meta content={meta.description} name="description" />
 
-      <link rel="icon" href="/favicon.png"  />
-      <meta property="og:url" content={`${WEBSITE_HOST_URL}${router.asPath}`} />
-      <link rel="canonical" href={`${WEBSITE_HOST_URL}${router.asPath}`} />
+      <link rel="icon" href="/favicon.png" />
+      <meta
+        property="og:url"
+        content={`${WEBSITE_HOST_URL}${
+          locale == "en" ? "" : "/" + locale
+        }${asPath}`}
+      />
+      <link
+        rel="canonical"
+        href={`${WEBSITE_HOST_URL}${
+          locale == "en" ? "" : "/" + locale
+        }${asPath}`}
+      />
       <meta property="og:type" content={meta.type} />
       <meta property="og:site_name" content={SiteDetails.website_name} />
       <meta property="og:description" content={meta.description} />
