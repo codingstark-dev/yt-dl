@@ -133,7 +133,7 @@ export default function Home({ postData }) {
     // if (isInstagramUrl) {
     tempUrl = Url;
     try {
-      res = await axios.post("/api/yt", {
+      res = await axios.post("http://137.184.232.87:4000/yt", {
         url: Url,
       });
       // await fetch('url')
